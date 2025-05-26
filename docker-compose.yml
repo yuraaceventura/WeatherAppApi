@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redisdb
+    networks:
+      - appnet
+
+  redisdb:
+    image: redis:8-alpine
+    command: ["redis-server", "--requirepass", "some-password"]
+    ports:
+      - "6379:6379"
+    networks:
+      - appnet
+
+networks:
+  appnet:
